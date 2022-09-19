@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-
+import { BroadcastChannel } from "broadcast-channel";
 import { store } from "store";
 import { addMessage } from "store/slices/messages";
 
