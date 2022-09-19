@@ -24,7 +24,7 @@ export const messagesSlice = createSlice({
   },
 });
 
-export const { addMessage } = messagesSlice.actions;
+export const { addMessage, loadMore } = messagesSlice.actions;
 
 export function selectMessages(state: RootState) {
   const messages = state.messages.messages;
@@ -44,7 +44,7 @@ export function selectMessages(state: RootState) {
     }
   }
   return {
-    messages: tobeReturned,
+    messages: tobeReturned.reverse(),
     total: messages.length,
   };
 }
