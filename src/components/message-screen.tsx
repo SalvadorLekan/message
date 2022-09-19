@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { selectLoggedInUser } from "store/slices/user";
 import { useCallback, useEffect, useRef } from "react";
+import { broadCastChannel } from "context/store";
 
 export default function MessageScreen() {
   const { messages, total } = useAppSelector(selectMessages);
@@ -42,16 +43,16 @@ export default function MessageScreen() {
   useEffect(scrollToButtom, [messages.at(-1)?.id, scrollToButtom]);
 
   const send = useCallback(
-    (message: string) => {
-      dispatch(
-        addMessage({
-          id: (Date.now() * Math.random()).toString(36),
-          text: message,
-          sender: user.name,
-          time: Date.now(),
-          type: "message",
-        })
-      );
+    (text: string) => {
+      const message: Message = {
+        id: (Date.now() * Math.random()).toString(36),
+        text: text,
+        sender: user.name,
+        time: Date.now(),
+        type: "message",
+      };
+      dispatch(addMessage(message));
+      broadCastChannel.postMessage(message);
     },
     [dispatch, user.name]
   );

@@ -1,4 +1,5 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { broadCastChannel } from "context/store";
 import { Formik } from "formik";
 import { useAppDispatch } from "hooks/store";
 import { useCallback } from "react";
@@ -40,6 +41,13 @@ export default function Login() {
           if (!values.name) {
             setFieldError("name", "Name is required");
           } else {
+            broadCastChannel.postMessage({
+              id: (Date.now() * Math.random()).toString(36),
+              sender: values.name,
+              text: "Joined",
+              time: Date.now(),
+              type: "join",
+            } as Message);
             logIn(values);
           }
         }}>
