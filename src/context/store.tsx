@@ -3,12 +3,10 @@ import { BroadcastChannel } from "broadcast-channel";
 import { store } from "store";
 import { addMessage } from "store/slices/messages";
 
-export const broadCastChannel = new BroadcastChannel("message");
+export const broadCastChannel = new BroadcastChannel<Message>("message");
 
-broadCastChannel.onmessage = (e) => {
-  const data = e.data as Message;
-
-  store.dispatch(addMessage(data));
+broadCastChannel.onmessage = (data) => {
+  if (data) store.dispatch(addMessage(data));
 };
 
 export default function ReduxProvider({ children }: React.PropsWithChildren) {
