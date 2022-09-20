@@ -31,11 +31,6 @@ export default function MessageScreen() {
     if (chat) {
       const { scrollHeight, clientHeight } = chat;
 
-      console.log({
-        scrollHeight,
-        clientHeight,
-      });
-
       chat.scrollTo(0, scrollHeight - clientHeight);
     }
   }, []);
